@@ -52,15 +52,20 @@ export class AuthService {
     if (userExists) {
       return false;
     }
+    console.log('Checked if user exists');
 
     // Hash and store the password
+    console.log('Hashing password');
     const hashedPassword = hashSync(registerDto.password, 10);
+    console.log('Hashed password');
+    console.log('Creating user');
     const user = await this.prismaService.user.create({
       data: {
         email: registerDto.email,
         password: hashedPassword,
       },
     });
+    console.log('Created user');
 
     user.password = '';
 
