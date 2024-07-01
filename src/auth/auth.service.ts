@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 import { LoginDto } from 'src/types/login-dto';
-import { hashSync, compareSync } from 'bcrypt';
+import * as argon2 from 'argon2';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterDto } from 'src/types/register-dto';
 
@@ -18,20 +18,29 @@ export class AuthService {
       where: { email: loginDto.email },
     });
 
-    if (user && compareSync(loginDto.password, user.password)) {
-      // Update the user's last login time
-      await this.prismaService.user.update({
-        where: { id: user.id },
-        data: { lastLogin: currentTime },
-      });
+    // Check if user exists
+    if (user) {
+      const passwordValid = await argon2.verify(
+        user.password,
+        loginDto.password,
+      );
 
-      // Generate a JWT token
-      const token = this.jwtService.sign({
-        sub: user.id,
-        plan: user.plan,
-      });
+      // Check if the password is correct
+      if (passwordValid) {
+        // Update the last login time
+        await this.prismaService.user.update({
+          where: { id: user.id },
+          data: { lastLogin: currentTime },
+        });
 
-      return { token };
+        // Generate a JWT token
+        const token = this.jwtService.sign({
+          sub: user.id,
+          plan: user.plan,
+        });
+
+        return { token };
+      }
     }
 
     // Wait till 1 second has passed to prevent timing attacks
@@ -56,7 +65,7 @@ export class AuthService {
 
     // Hash and store the password
     console.log('Hashing password');
-    const hashedPassword = hashSync(registerDto.password, 10);
+    const hashedPassword = await argon2.hash(registerDto.password);
     console.log('Hashed password');
     console.log('Creating user');
     const user = await this.prismaService.user.create({
