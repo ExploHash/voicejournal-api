@@ -2,7 +2,7 @@ import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
 
 export class JournalEntryDto {
   @IsNotEmpty()
-  @MaxLength(30)
+  @IsString()
   title_enc: string;
 
   @IsString()
