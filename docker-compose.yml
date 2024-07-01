@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  nest-mysql:
+    image: mysql:8
+    restart: always
+    ports:
+      - '3306:3306'
+    env_file:
+      - .env
+    volumes:
+      - nest-mysql:/var/lib/mysql
+
+volumes:
+  nest-mysql:
+    name: nest-mysql-db
