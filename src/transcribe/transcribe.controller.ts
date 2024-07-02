@@ -19,11 +19,6 @@ export class TranscribeController {
   @UseGuards(AuthGuard, PremiumGuard)
   @UseInterceptors(FileInterceptor('file'))
   transcribeAudio(@UploadedFile() file: Express.Multer.File) {
-    // Check if m4a file
-    if (file.mimetype !== 'audio/mp4') {
-      throw new BadRequestException('Only m4a files are allowed');
-    }
-
     return this.transcribeService.transcribeAudio(file);
   }
 }
