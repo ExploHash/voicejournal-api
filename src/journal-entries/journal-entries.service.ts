@@ -49,12 +49,24 @@ export class JournalEntriesService {
       throw new Error('Journal not found');
     }
 
-    return this.prismaService.journalEntry.create({
+    const entry =  this.prismaService.journalEntry.create({
       data: {
         ...data,
         journalId,
       },
     });
+
+    // Update last entry date on journal
+    await this.prismaService.journal.update({
+      where: {
+        id: journalId,
+      },
+      data: {
+        lastEntryAt: new Date(),
+      },
+    });
+
+    return entry;
   }
 
   async update(
