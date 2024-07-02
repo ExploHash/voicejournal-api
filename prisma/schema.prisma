@@ -51,6 +51,7 @@ model Recording {
   isProcessed             Boolean         @default(false)
   transcript_enc          String?         @db.Text
   transcriptFormatted_enc String?         @db.Text
+  length                  Int             @default(0)
   createdAt               DateTime        @default(now())
   updatedAt               DateTime        @updatedAt
   entryId                 String

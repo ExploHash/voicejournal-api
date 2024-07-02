@@ -21,6 +21,7 @@ export class RecordingsService {
     entryId: string,
     journalId: string,
     userId: string,
+    length: number,
   ) {
     // First check if the journal entry exists
     const entry = await this.prismaService.journalEntry.findUnique({
@@ -43,6 +44,7 @@ export class RecordingsService {
         transcript_enc,
         transcriptFormatted_enc,
         entryId,
+        length,
       },
     });
 
