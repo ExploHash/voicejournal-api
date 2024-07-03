@@ -18,6 +18,9 @@ export class JournalEntriesService {
           userId,
         },
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
   }
 
@@ -49,7 +52,7 @@ export class JournalEntriesService {
       throw new Error('Journal not found');
     }
 
-    const entry =  this.prismaService.journalEntry.create({
+    const entry = this.prismaService.journalEntry.create({
       data: {
         ...data,
         journalId,

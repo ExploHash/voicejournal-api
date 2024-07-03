@@ -4,9 +4,11 @@ import { Injectable } from '@nestjs/common';
 export class TranscribeService {
   async transcribeAudio(file: Express.Multer.File) {
     // Transcribe the audio file
+    console.log('Starting transcription');
     const transcript = await this.transcribeWithWhisper(file);
 
     // Format the text
+    console.log('Formatting');
     const formattedText = await this.formatTextWithGPT4(transcript);
 
     return {
@@ -39,7 +41,6 @@ export class TranscribeService {
       }
 
       const responseData = await response.json();
-      console.log(responseData.text);
       return responseData.text;
     } catch (error) {
       console.log(error);

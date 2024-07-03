@@ -11,6 +11,9 @@ export class JournalsService {
       where: {
         userId,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
   }
 
