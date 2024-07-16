@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { IsInt, IsNotEmpty, IsString } from 'class-validator';
 
 export class JournalEntryDto {
   @IsNotEmpty()
@@ -7,4 +7,7 @@ export class JournalEntryDto {
 
   @IsString()
   content_enc: string;
+
+  @IsInt()
+  amountOfWords: number;
 }

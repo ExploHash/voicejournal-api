@@ -12,6 +12,12 @@ export class JournalEntriesService {
 
   async findAll(journalId: string, userId: string) {
     return this.prismaService.journalEntry.findMany({
+      select: {
+        id: true,
+        title_enc: true,
+        createdAt: true,
+        amountOfWords: true,
+      },
       where: {
         journalId,
         journal: {

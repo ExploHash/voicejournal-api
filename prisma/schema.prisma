@@ -44,6 +44,7 @@ model JournalEntry {
   journalId   String
   journal     Journal     @relation(fields: [journalId], references: [id])
   recordings   Recording[]
+  amountOfWords Int       @default(0)
 }
 
 model Recording {
