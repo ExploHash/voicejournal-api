@@ -1,6 +1,6 @@
 import { IsInt, IsNotEmpty, IsString } from 'class-validator';
 
-export class JournalEntryDto {
+export class UpdateJournalEntryDto {
   @IsNotEmpty()
   @IsString()
   title_enc: string;
@@ -9,5 +9,5 @@ export class JournalEntryDto {
   content_enc: string;
 
   @IsInt()
-  amountOfWords: number;
+  amountOfWords?: number;
 }

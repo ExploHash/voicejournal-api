@@ -10,7 +10,8 @@ import {
   Put,
 } from '@nestjs/common';
 import { JournalEntriesService } from './journal-entries.service';
-import { JournalEntryDto } from '../types/journal-entry.dto';
+import { CreateJournalEntryDto } from '../types/create-journal-entry.dto';
+import { UpdateJournalEntryDto } from 'src/types/update-journal-entry.dto';
 
 @Controller('journals/:journalId/entries')
 export class JournalEntriesController {
@@ -45,7 +46,7 @@ export class JournalEntriesController {
 
   @Post()
   async create(
-    @Body() journalEntryDto: JournalEntryDto,
+    @Body() journalEntryDto: CreateJournalEntryDto,
     @Param('journalId') journalId: string,
     @Request() request: { userId: string },
   ) {
@@ -58,7 +59,7 @@ export class JournalEntriesController {
 
   @Put(':id')
   async update(
-    @Body() journalEntryDto: JournalEntryDto,
+    @Body() journalEntryDto: UpdateJournalEntryDto,
     @Param('id') id: string,
     @Param('journalId') journalId: string,
     @Request() request: { userId: string },

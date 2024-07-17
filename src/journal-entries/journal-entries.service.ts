@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
-import { JournalEntryDto } from '../types/journal-entry.dto';
+import { CreateJournalEntryDto } from '../types/create-journal-entry.dto';
 import { RecordingsService } from 'src/recordings/recordings.service';
+import { UpdateJournalEntryDto } from 'src/types/update-journal-entry.dto';
 
 @Injectable()
 export class JournalEntriesService {
@@ -45,7 +46,7 @@ export class JournalEntriesService {
     });
   }
 
-  async create(data: JournalEntryDto, journalId: string, userId: string) {
+  async create(data: CreateJournalEntryDto, journalId: string, userId: string) {
     // First check if the journal exists
     const journal = await this.prismaService.journal.findUnique({
       where: {
@@ -61,6 +62,7 @@ export class JournalEntriesService {
     const entry = this.prismaService.journalEntry.create({
       data: {
         ...data,
+        amountOfWords: 0,
         journalId,
       },
     });
@@ -79,7 +81,7 @@ export class JournalEntriesService {
   }
 
   async update(
-    data: JournalEntryDto,
+    data: UpdateJournalEntryDto,
     id: string,
     journalId: string,
     userId: string,
