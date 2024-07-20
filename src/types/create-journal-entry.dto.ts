@@ -1,4 +1,4 @@
-import { IsDate, IsNotEmpty, IsString } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateJournalEntryDto {
   @IsNotEmpty()
@@ -8,6 +8,6 @@ export class CreateJournalEntryDto {
   @IsString()
   content_enc: string;
 
-  @IsDate()
+  @IsDateString()
   date: Date;
 }
