@@ -26,10 +26,14 @@ export class JournalEntriesService {
           userId,
         },
       },
-      orderBy: {
-        date: 'desc',
-        createdAt: 'desc',
-      },
+      orderBy: [
+        {
+          date: 'desc',
+        },
+        {
+          createdAt: 'desc',
+        },
+      ],
     });
   }
 
