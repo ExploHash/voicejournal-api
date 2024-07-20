@@ -15,6 +15,7 @@ export class JournalEntriesService {
     return this.prismaService.journalEntry.findMany({
       select: {
         id: true,
+        date: true,
         title_enc: true,
         createdAt: true,
         amountOfWords: true,
@@ -26,6 +27,7 @@ export class JournalEntriesService {
         },
       },
       orderBy: {
+        date: 'desc',
         createdAt: 'desc',
       },
     });
