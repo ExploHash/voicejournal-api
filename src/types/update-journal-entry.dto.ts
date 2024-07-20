@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsString } from 'class-validator';
+import { IsDate, IsInt, IsNotEmpty, IsString } from 'class-validator';
 
 export class UpdateJournalEntryDto {
   @IsNotEmpty()
@@ -10,4 +10,7 @@ export class UpdateJournalEntryDto {
 
   @IsInt()
   amountOfWords?: number;
+
+  @IsDate()
+  date: Date;
 }

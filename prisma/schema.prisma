@@ -41,6 +41,7 @@ model JournalEntry {
   content_enc String      @db.Text
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
+  date        DateTime?
   journalId   String
   journal     Journal     @relation(fields: [journalId], references: [id])
   recordings   Recording[]
