@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  Body,
   Controller,
   Post,
   UploadedFile,
@@ -20,5 +21,14 @@ export class TranscribeController {
   @UseInterceptors(FileInterceptor('file'))
   transcribeAudio(@UploadedFile() file: Express.Multer.File) {
     return this.transcribeService.transcribeAudio(file);
+  }
+
+  @Post('summarize')
+  @UseGuards(AuthGuard, PremiumGuard)
+  async transcribeSummary(@Body() body: { text: string }) {
+    const summarizedText = await this.transcribeService.summarizeTextWithGPT4(
+      body?.text,
+    );
+    return { summarizedText };
   }
 }

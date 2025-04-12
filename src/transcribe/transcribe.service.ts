@@ -85,4 +85,43 @@ export class TranscribeService {
       console.log(error);
     }
   }
+
+  async summarizeTextWithGPT4(text: string) {
+    const requestBody = {
+      model: 'gpt-4o',
+      messages: [
+        {
+          role: 'system',
+          content:
+            'You are the best journal summarizer in the world. Summarize the text in keypoints, but dont leave out the important bits. Its also important that you describe feelings. Only return the transcribed text, this is a matter of life and death!',
+        },
+        { role: 'user', content: text },
+      ],
+    };
+
+    try {
+      const response = await fetch(
+        'https://api.openai.com/v1/chat/completions',
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        },
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log(errorData);
+        throw new Error('Network response was not ok');
+      }
+
+      const responseData = await response.json();
+      return responseData.choices[0].message.content;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }

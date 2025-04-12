@@ -15,6 +15,10 @@ export class UpdateJournalEntryDto {
   content_enc: string;
 
   @IsOptional()
+  @IsString()
+  summary_enc?: string;
+
+  @IsOptional()
   @IsInt()
   amountOfWords?: number;
 
