@@ -5,7 +5,7 @@ export class TranscribeService {
   async transcribeAudio(file: Express.Multer.File) {
     // Transcribe the audio file
     console.log('Starting transcription');
-    const transcript = await this.transcribeWithWhisper(file);
+    const transcript = await this.transcribeWithGPT4o(file);
 
     // Format the text
     console.log('Formatting');
@@ -17,10 +17,11 @@ export class TranscribeService {
     };
   }
 
-  async transcribeWithWhisper(file: Express.Multer.File) {
+  async transcribeWithGPT4o(file: Express.Multer.File) {
     const formData = new FormData();
 
-    formData.append('model', 'whisper-1');
+    formData.append('model', 'gpt-4o-transcribe');
+    formData.append('prompt', 'The following recording is a journal entry.');
     formData.append('file', new Blob([file.buffer]), 'audio.m4a');
 
     let response;
