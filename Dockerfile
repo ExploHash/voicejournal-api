@@ -13,7 +13,9 @@ RUN npm run build
 RUN npm prune --production
 
 # Prod phase
-FROM node:20-alpine AS prod
+FROM node:20-slim
+
+RUN apt-get update -y && apt-get install -y openssl
 WORKDIR /app
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/node_modules ./node_modules
