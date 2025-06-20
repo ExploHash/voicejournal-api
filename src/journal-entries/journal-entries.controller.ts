@@ -8,6 +8,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { JournalEntriesService } from './journal-entries.service';
 import { CreateJournalEntryDto } from '../types/create-journal-entry.dto';
@@ -21,8 +22,9 @@ export class JournalEntriesController {
   async findAll(
     @Param('journalId') journalId: string,
     @Request() request: { userId: string },
+    @Query() query: { from?: string; to?: string } = {},
   ) {
-    return this.journalEntriesService.findAll(journalId, request.userId);
+    return this.journalEntriesService.findAll(journalId, request.userId, query);
   }
 
   @Get(':id')

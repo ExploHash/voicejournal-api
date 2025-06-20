@@ -94,7 +94,7 @@ export class TranscribeService {
         {
           role: 'system',
           content:
-            'You are the best journal summarizer in the world. Summarize the text in keypoints, but dont leave out the important bits. Its also important that you describe feelings. Only return the transcribed text, this is a matter of life and death!',
+            'You are the best journal summarizer in the world. Summarize the text in short keypoints, but dont leave out the important bits. Its also important that you describe feelings. Make it as usefull as possible when reading it back. Only return the transcribed text, this is a matter of life and death!',
         },
         { role: 'user', content: text },
       ],

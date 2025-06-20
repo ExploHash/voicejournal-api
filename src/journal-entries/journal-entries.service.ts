@@ -11,7 +11,28 @@ export class JournalEntriesService {
     private readonly recordingsService: RecordingsService,
   ) {}
 
-  async findAll(journalId: string, userId: string) {
+  async findAll(journalId: string, userId: string, query: { from?: string; to?: string } = {}) {
+    const where = {
+      journalId,
+      journal: {
+        userId,
+      },
+      date: {},
+    };
+
+    if (query.from) {
+      where['date'] = {
+        gte: new Date(query.from),
+      };
+    }
+
+    if (query.to) {
+      where['date'] = {
+        ...where['date'],
+        lte: new Date(query.to),
+      };
+    }
+
     return this.prismaService.journalEntry.findMany({
       select: {
         id: true,
@@ -20,12 +41,7 @@ export class JournalEntriesService {
         createdAt: true,
         amountOfWords: true,
       },
-      where: {
-        journalId,
-        journal: {
-          userId,
-        },
-      },
+      where,
       orderBy: [
         {
           date: 'desc',
