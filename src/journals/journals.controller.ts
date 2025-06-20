@@ -7,6 +7,7 @@ import {
   UseGuards,
   Request,
   NotFoundException,
+  Delete,
 } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { CreateJournalDto } from 'src/types/create-journal.dto';
@@ -44,5 +45,18 @@ export class JournalsController {
     @Request() request: { userId: string },
   ) {
     return this.journalsService.create(createJournalDto, request.userId);
+  }
+
+  @Delete(':id')
+  @UseGuards(AuthGuard)
+  async delete(
+    @Param('id') id: string,
+    @Request() request: { userId: string },
+  ) {
+    const deleted = await this.journalsService.delete(id, request.userId);
+    if (!deleted) {
+      throw new NotFoundException('Journal not found');
+    }
+    return { message: 'Journal deleted successfully' };
   }
 }

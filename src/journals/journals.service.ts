@@ -34,4 +34,17 @@ export class JournalsService {
       },
     });
   }
+
+  async delete(id: string, userId: string) {
+    const journal = await this.findOne(id, userId);
+    if (!journal) {
+      return false;
+    }
+    await this.prismaService.journal.delete({
+      where: {
+        id,
+      },
+    });
+    return true;
+  }
 }
