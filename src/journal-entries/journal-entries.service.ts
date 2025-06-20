@@ -40,6 +40,8 @@ export class JournalEntriesService {
         title_enc: true,
         createdAt: true,
         amountOfWords: true,
+        emotion: true,
+        dayScore: true,
       },
       where,
       orderBy: [
