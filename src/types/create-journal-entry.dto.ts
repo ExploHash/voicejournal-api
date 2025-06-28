@@ -13,6 +13,8 @@ export enum JournalEntryEmotion {
   'EXCITED' = 'EXCITED',
   'GOOD' = 'GOOD',
   'TIRED' = 'TIRED',
+  'MEH' = 'MEH',
+  'ALRIGHT' = 'ALRIGHT',
 }
 
 
