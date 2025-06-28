@@ -7,7 +7,8 @@ export class RecordingsService {
   constructor(private readonly prismaService: PrismaService) {}
 
   s3client = new AWS.S3({
-    region: 'eu-west-2',
+    region: 'us-east-1',
+    endpoint: 'https://ams3.digitaloceanspaces.com',
     credentials: {
       accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? '',
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? '',
@@ -53,6 +54,7 @@ export class RecordingsService {
       Bucket: process.env.AWS_BUCKET_NAME ?? '',
       Key: `recordings/${recording.id}.enc`,
       Body: file.buffer,
+      ACL: 'public-read',
     });
 
     // Update the recording with isUploaded = true
