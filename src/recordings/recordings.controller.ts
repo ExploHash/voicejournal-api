@@ -26,7 +26,7 @@ export class RecordingsController {
     @UploadedFile() file_enc: Express.Multer.File,
     @Body('transcript_enc') transcript_enc: string,
     @Body('transcriptFormatted_enc') transcriptFormatted_enc: string,
-    @Body('length') length: number,
+    @Body('length') length: string,
     @Param('entryId') entryId: string,
     @Param('journalId') journalId: string,
     @Request() request: { userId: string },
@@ -42,7 +42,7 @@ export class RecordingsController {
       entryId,
       journalId,
       request.userId,
-      length,
+      +length,
     );
   }
 
